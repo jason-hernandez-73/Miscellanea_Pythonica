@@ -38,10 +38,12 @@ for row in csvreader:
     print(f'Greatest Decrease in Profits: {greatest_decrease}')
 
 # Export results to text file
-result_file.writelines (L) for L[
-    total_months, 
-    total_profits_losses, 
-    average_change, 
-    greatest_increase, 
-    greatest_decrease
-]
+f= open("profitLoss.txt","w+")
+file.write(
+    f'Total Months: {total_months}', 
+    f'Total: ${total_profits_losses}', 
+    f'Average Change: {average_change}', 
+    f'Greatest Increase in Profits: {greatest_increase}', 
+    f'Greatest Decrease in Profits: {greatest_decrease}'
+)
+f.close()
