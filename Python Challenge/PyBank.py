@@ -1,7 +1,7 @@
 # Import the file and get past the headers
 import os
 import csv
-budget_data_csv = os.path.join("..", "UC-Berkeley", "Python Challenge", PyBank_Resources_budget_data.csv)
+budget_data_csv = os.path.join("..", "UC-Berkeley", "Python Challenge", "PyBank_Resources_budget_data.csv")
 with open(budget_data_csv, newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     budget_header = next(csvfile)
