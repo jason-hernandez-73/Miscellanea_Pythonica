@@ -1,7 +1,7 @@
 # Import the data and skip headers
 import os
 import csv
-election_data_csv = os.path.join("..", "UC-Berkeley", "Python Challenge", "PyPoll_Resources_election_data.csv")
+election_data_csv = os.path.join("..", "PyPoll_Resources_election_data.csv")
 
 with open(PyPoll_Resources_election_data) as csvfile:
     csvreader = csv.reader(csvfile)
@@ -31,7 +31,7 @@ def unique(csvfile):
             unique_names.append(x) 
 
 # Calculate number of votes per candidate
-with open(PyPoll_Resources_election_data), newline='') as f:
+with open(PyPoll_Resources_election_data) as f:
     reader = csv.reader(f)
     vote_counts = Counter(map(itemgetter(2), reader))
     percent_votes = (vote_counts / total_votes)
@@ -44,5 +44,6 @@ winner = max(vote_counts)
 
 # Print winning candiate's name
 print("-") * 20
-print("Winner: ", )
+if row[0] == 
+print("Winner: ", row[2])
 print("-") * 20
