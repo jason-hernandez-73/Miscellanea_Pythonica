@@ -1,51 +1,51 @@
 # Import the data and skip headers
 import os
 import csv
-election_data_csv = os.path.join("..", "PyPoll_Resources_election_data.csv")
+election_data_csv = ("PyPoll_Resources_election_data.csv")
+
+# Set initial values
+total_votes = 0
+vote_counts_dict = {"Candidate": {}, "Votes": {}}
+percent_votes = 0
+name = []
+unique_names = [] 
+winner = ""
 
 with open(election_data_csv) as csvfile:
     csvreader = csv.reader(csvfile)
     headers = next(csvreader, None)
-    headers['Voter ID', 'County', 'Candidate']
 
-    #Tally total votes cast
-    total_votes = sum(1 for row in csvfile)
-
-    # Print total votes cast
-    print("Election Results")
-    print("-") * 20
-    print(f'Total Votes: {total_votes}')
-    print("-") * 20
-
-    # List candidates who received votes
-    name = str(election_data_csv[2])
-
-    # function to get unique values 
-    def unique(csvfile): 
-  
-       # intilize a null list 
-       unique_names = [] 
-      
-        # check for all elements in "Candidate" column
     for name in csvfile: 
-        # check if exists in unique_list or not 
-        if name not in unique_names: 
-            unique_names.append(name) 
+        #Tally total votes cast
+        total_votes = total_votes + 1
 
-# Calculate number of votes per candidate
-with open(election_data_csv) as f:
-    reader = csv.reader(f)
-    vote_counts = Counter(map(operator.itemgetter(2), reader))
-    percent_votes = (vote_counts / total_votes)
+        # List candidates who received votes
+        name = str(election_data_csv[2])
+
+        # check for all elements in "Candidate" column
+            # check if exists in unique list or not 
+        if name not in unique_names: 
+            unique_names.append(name)
+            vote_count = 1
+            vote_counts_dict.update({"Candidate" : name , "Votes" : vote_count}) # Code from javatpoint.com
+        else: 
+            vote_count = vote_count + 1
+            vote_counts_dict.update({"Candidate" : name , "Votes" : vote_count})
+        percent_votes = (vote_count / total_votes)
+
+# Print total votes cast
+print("Election Results")
+print("--------------")
+print(f'Total Votes: {total_votes}')
+print("--------------")
 
 # Print each candidate's name and number of votes
-print(f'{unique_names},": ", {percent_votes}, {vote_counts}')
+print(f'{unique_names},": ", {percent_votes}, {vote_count}')
 
 # Find candidate with maximum number of votes
-winner = max(vote_counts)
+winner = max(vote_count)
 
 # Print winning candiate's name
-print("-") * 20
-if row[2] == winner:
-    print(f"Winner: , {name}, row[2], votes")
-    print("-") * 20
+print("--------------")
+print(f"Winner: , {winner}, row[2], votes")
+print("--------------")

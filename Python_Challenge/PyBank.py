@@ -20,7 +20,6 @@ with open(budget_data_csv, newline="") as csvfile:
     previous_row = next(csvreader)
     total_profits_losses = int(previous_row[1])
     for row in csvreader:
-        
         total_months = total_months + 1
 
     # Ticker the profits and losses
@@ -40,6 +39,7 @@ with open(budget_data_csv, newline="") as csvfile:
             greatest_month_decrease = row[0]
 
     average_change = total_profits_losses / total_months
+    
     # Print the number of months
     print(f'Total Months: {total_months}')
 
@@ -59,7 +59,7 @@ with open("profitLoss.txt","w") as file:
         f'Total Months: {total_months}\n'  
         f'Total: ${total_profits_losses}\n' 
         f'Average Change: {average_change}\n' 
-        f'Greatest Increase in Profits: {greatest_increase}\n' 
-        f'Greatest Decrease in Profits: {greatest_decrease}'
+        f'Greatest Increase in Profits: {greatest_month_increase}, {greatest_increase}\n' 
+        f'Greatest Decrease in Profits: {greatest_month_decrease}, {greatest_decrease}'
     )
 file.close()
