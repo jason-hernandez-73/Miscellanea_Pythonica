@@ -25,19 +25,19 @@ with open(budget_data_csv, newline="") as csvfile:
         total_profits_losses = total_profits_losses + int(row[1])
 
 # Average the changes in profits and losses
-    change = next(csvreader)
-    for row in csvreader:
-        change = int(row[1]) - previous_row
-    average_change = total_profits_losses / total_months
+        change = next(csvreader)
+        for row in csvreader:
+            change = int(row[1]) - previous_row
+            average_change = total_profits_losses / total_months
 
-# Print the number of months
-print(f'Total Months: {total_months}')
+    # Print the number of months
+    print(f'Total Months: {total_months}')
 
-# Print the net profits/losses
-print(f'Total: ${total_profits_losses}')
+    # Print the net profits/losses
+    print(f'Total: ${total_profits_losses}')
 
-# Print the average change
-print(f'Average Change: {average_change}')
+    # Print the average change
+    print(f'Average Change: {average_change}')
 
 # Find the maximum and minimum change
 greatest_increase = max(change)
