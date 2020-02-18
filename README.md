@@ -1,2 +1,2 @@
 # UC-Berkeley
-Homework 
+This is the repo for the Data Analytics Bootcamp projects. 
