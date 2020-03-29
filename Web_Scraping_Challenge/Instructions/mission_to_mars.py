@@ -5,7 +5,6 @@ from pprint import pprint
 import pymongo
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
-from flask import Flask, render_template
 import lxml
 
 # Nasa's Mars News Site
@@ -67,7 +66,7 @@ for tweet in timeline:
     
 # Add to MongoDB
 post = {
-    'tweet': tweet
+    'tweet': tweet_text
 }
 
 tweets.insert_one(post)
