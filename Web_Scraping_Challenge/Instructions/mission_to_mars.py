@@ -67,8 +67,7 @@ for tweet in timeline:
     
 # Add to MongoDB
 post = {
-    'title': news_title,
-    'paragraph': news_p
+    'tweet': tweet
 }
 
 tweets.insert_one(post)
