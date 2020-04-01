@@ -12,7 +12,7 @@ import time
 url = "https://mars.nasa.gov/news/"
 
 executable_path = {'executable_path': 'chromedriver.exe'}
-browser = Browser('chrome', **executable_path, headless=False)
+browser = Browser('chrome', **executable_path, headless=True)
 
 # Set up MongoDB
 conn='mongodb://localhost:27017'
@@ -23,8 +23,6 @@ db = client.missions_to_mars
 collection = db.mars_news
 
 # Retrieve page with the requests module
-# response = requests.get(url)
-# html = response.text
 browser.visit(url) 
 time.sleep(2) 
 html = browser.html
@@ -34,8 +32,8 @@ soup = bs(html, 'html.parser')
 # Assign variables
 item_list=soup.find('ul', class_='item_list').find('li', class_='slide')
 
-news_title = item.find('div', class_='content_title').get_text()
-news_p = item.find('div', class_='article_teaser_body').get_text()
+news_title = item_list.find('div', class_='content_title').get_text()
+news_p = item_list.find('div', class_='article_teaser_body').get_text()
 print(news_title)
 print(news_p)
 
@@ -50,6 +48,16 @@ collection.insert_one(post)
 # Splinter to featured image
 featured_image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
 browser.visit(featured_image_url)
+element = browser.find_by_id('full_image')
+element.click()
+browser.is_element_present_by_text('more info', wait_time = 1)
+more_info_element = browser.links.find_by_partial_text('more info')
+more_info_element.click()
+
+html = browser.html
+img = bs(html, 'html.parser')
+img_url = img.select_one('figure.lede a img').get('src')
+img_url
 
 # Twitter - code from Vicky and Tracy, after a lot of troubleshootong!
 all_tweets = []
@@ -73,19 +81,26 @@ collection.insert_one(post)
 
 # Mars Facts table
 facts_url = 'https://space-facts.com/mars/'
-mars_table = pd.read_html(facts_url)
-mars_table
+mars_table = pd.read_html(facts_url)[0]
+mars_table.columns = ['description', 'value']
+mars_table.to_html()
 
 #Hemisphere images
-hemisphere_image_urls = [
-    {"title": "Valles Marineris Hemisphere",\
-     "img_url": "https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced"},
-    {"title": "Cerberus Hemisphere",\
-     "img_url": "https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced"},
-    {"title": "Schiaparelli Hemisphere",\
-     "img_url": "https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced"},
-    {"title": "Syrtis Major Hemisphere",\
-     "img_url": "https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced"},
-]
+hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+browser.visit(hemispheres_url)
+links = browser.find_by_css('a.product-item h3')
+
+hemispheres = []
+
+for url_id in range(len(links)):
+    hemisphere = {}
+    browser.find_by_css('a.product-item h3')[url_id].click()
+    sample = browser.links.find_by_text('Sample').first
+    hemisphere['img_url'] = sample['href']
+    hemisphere['title'] = browser.find_by_css('h2.title').text
+    hemispheres.append(hemisphere)
+    browser.back()
+    
+return hemispheres
 
 browser.quit()
