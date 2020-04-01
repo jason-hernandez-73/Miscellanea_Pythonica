@@ -6,6 +6,7 @@ import pymongo
 from bs4 import BeautifulSoup as bs
 from splinter import Browser
 import lxml
+import time
 
 # Nasa's Mars News Site
 url = "https://mars.nasa.gov/news/"
@@ -24,20 +25,19 @@ collection = db.mars_news
 # Retrieve page with the requests module
 # response = requests.get(url)
 # html = response.text
-browser.visit(url)  
+browser.visit(url) 
+time.sleep(2) 
 html = browser.html
 # Create BeautifulSoup object; parse with 'html.parser'
 soup = bs(html, 'html.parser')
 
-# THIS BLOCK NEEDS TO BE FIXED
 # Assign variables
-# slide = soup.find('li', class_='image_and_description_container')
-# print(slide)
-#news_title = soup.find('div', class_='content_title')
-# news_title_text = news_title.a.text
-# news_p = soup.find('div', class_='article_teaser_body')
-#print(news_title)
-# print(news_p)
+item_list=soup.find('ul', class_='item_list').find('li', class_='slide')
+
+news_title = item.find('div', class_='content_title').get_text()
+news_p = item.find('div', class_='article_teaser_body').get_text()
+print(news_title)
+print(news_p)
 
 # Add to MongoDB
 post = {
@@ -45,7 +45,7 @@ post = {
     'paragraph': news_p
 }
 
-collection.insert(post)
+collection.insert_one(post)
 
 # Splinter to featured image
 featured_image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -69,7 +69,7 @@ post = {
     'tweet': tweet_text
 }
 
-tweets.insert_one(post)
+collection.insert_one(post)
 
 # Mars Facts table
 facts_url = 'https://space-facts.com/mars/'
