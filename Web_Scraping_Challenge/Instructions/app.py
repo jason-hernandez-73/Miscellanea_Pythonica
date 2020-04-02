@@ -1,5 +1,6 @@
 # import necessary libraries
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
+from flask_pymongo import PyMongo
 from splinter import Browser
 import mission_to_mars.py
 
@@ -11,7 +12,8 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/missions_to_mars")
 # @TODO:  Create a route and view function that takes in a string and renders index.html template
 @app.route("/")
 def home():
-    return
+    
+    
 
 @app.route("/scrape")
 def scrape():
@@ -21,7 +23,7 @@ def scrape():
     return img_url
     return tweet_text
     return mars_table
-    return hemispheres
+    return render_template("index.html", list=hemispheres)
 
     redirect("/")
 
