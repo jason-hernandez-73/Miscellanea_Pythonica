@@ -34,8 +34,8 @@ item_list=soup.find('ul', class_='item_list').find('li', class_='slide')
 
 news_title = item_list.find('div', class_='content_title').get_text()
 news_p = item_list.find('div', class_='article_teaser_body').get_text()
-print(news_title)
-print(news_p)
+return news_title
+return news_p
 
 # Add to MongoDB
 post = {
@@ -69,7 +69,7 @@ for tweet in timeline:
     tweet_id = tweet['data-item-id']
     tweet_text = tweet.select('p.tweet-text')[0].get_text()
     all_tweets.append({"id": tweet_id, "text": tweet_text})
-    print(all_tweets)
+    return all_tweets
     break
     
 # Add to MongoDB
