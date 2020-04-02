@@ -18,8 +18,10 @@ def scrape():
     data = mission_to_mars.scrape_info()
 
     return render_template("index.html", news_title, news_p)
-    return featured_image
+    return img_url
     return tweet_text
+    return mars_table
+    return hemispheres
 
     redirect("/")
 

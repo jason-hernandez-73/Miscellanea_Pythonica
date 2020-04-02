@@ -100,7 +100,5 @@ for url_id in range(len(links)):
     hemisphere['title'] = browser.find_by_css('h2.title').text
     hemispheres.append(hemisphere)
     browser.back()
-    
-return hemispheres
 
 browser.quit()
