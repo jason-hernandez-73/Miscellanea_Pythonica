@@ -37,14 +37,6 @@ def scrape_info():
     news_title = item_list.find('div', class_='content_title').get_text()
     news_p = item_list.find('div', class_='article_teaser_body').get_text()
 
-    # Add to MongoDB
-    post = {
-        'title': news_title,
-        'paragraph': news_p
-    }
-
-    collection.insert_one(post)
-
     # Splinter to featured image
     featured_image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(featured_image_url)
@@ -70,13 +62,6 @@ def scrape_info():
         tweet_text = tweet.select('p.tweet-text')[0].get_text()
         all_tweets.append({"id": tweet_id, "text": tweet_text})
         break
-        
-    # Add to MongoDB
-    post = {
-        'tweet': tweet_text
-    }
-
-    collection.insert_one(post)
 
     # Mars Facts table
     facts_url = 'https://space-facts.com/mars/'

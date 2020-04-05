@@ -23,7 +23,7 @@ def scrape():
     # scrape from url
     data=mission_to_mars.scrape_info()
     # stores data into MongoDB
-    collection.update_one({}, data, upsert=True)
+    collection.insert_one({}, data, upsert=True)
     redirect("/")
     return "Success! "
     
