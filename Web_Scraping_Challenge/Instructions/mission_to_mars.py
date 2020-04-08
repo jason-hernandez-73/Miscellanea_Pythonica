@@ -17,12 +17,12 @@ def scrape_info():
     browser = Browser('chrome', **executable_path, headless=True)
 
     # Set up MongoDB
-    conn='mongodb://localhost:27017'
-    client = pymongo.MongoClient(conn)
+    # conn='mongodb://localhost:27017'
+    # client = pymongo.MongoClient(conn)
 
     # Define database
-    db = client.missions_to_mars
-    collection = db.mars_news
+    # db = client.missions_to_mars
+    # collection = db.mars_news
 
     # Retrieve page with the requests module
     browser.visit(url) 
@@ -48,8 +48,11 @@ def scrape_info():
 
     html = browser.html
     img = bs(html, 'html.parser')
-    img_url = img.select_one('figure.lede a img').get('src')
-    img_url
+    try:
+        img_url = img.select_one('figure.lede a img').get('src')
+    except AttributeError:
+        img_url=""
+    img_url = f"https://www.jpl.nasa.gov{img_url}"
 
     # Twitter - code from Vicky and Tracy, after a lot of troubleshootong!
     all_tweets = []
@@ -67,7 +70,7 @@ def scrape_info():
     facts_url = 'https://space-facts.com/mars/'
     mars_table = pd.read_html(facts_url)[0]
     mars_table.columns = ['description', 'value']
-    mars_table.to_html()
+    html_table = mars_table.to_html()
 
     #Hemisphere images
     hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
@@ -86,3 +89,11 @@ def scrape_info():
         browser.back()
 
     browser.quit()
+    results={"news_title": news_title,
+        "news_p": news_p,
+        "img_url": img_url,
+        "tweet_text": tweet_text,
+        "mars_table": html_table,
+        "hemispheres": hemispheres
+        }
+    return results

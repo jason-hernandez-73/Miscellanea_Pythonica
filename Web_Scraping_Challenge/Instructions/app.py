@@ -14,18 +14,20 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/missions_to_mars")
 def home():
     # this function has to retrieve data from the MongoDB
     records=mongo.db.collection.find_one()
+    print(records)
     return render_template('index.html', mars=records)
     
 @app.route("/scrape")
 def scrape():
     # this function calls the scraper, which stores results into the MongoDB
-    collecton=mongo.db.collection
+    collection=mongo.db.collection
     # scrape from url
     data=mission_to_mars.scrape_info()
     # stores data into MongoDB
-    collection.insert_one({}, data, upsert=True)
-    redirect("/")
+    collection.replace_one({}, data, upsert=True)
     return "Success! "
+    redirect("/")
+    
     
 
 if __name__ == "__main__":
