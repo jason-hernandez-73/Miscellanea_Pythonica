@@ -1,7 +1,5 @@
-<doc type = html>
-<head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
+<!DOCTYPE html><html lang="en">
+<head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <meta http-equiv="X-UA-Compatible" content="ie=edge">  <title>Mission to Mars</title>  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head>
 <body>
 <div class="jumbotron jumbotron-fluid text-center">
   <div class="container">
@@ -9,34 +7,38 @@
     <a class="btn btn-primary btn-lg" href="../scrape" role="button">Scrape Data</a>
   </div>
 </div>
-<div class="px-5">
-  <h2>Latest Mars News</h2>
-  <p>{{ news_title }}<br>
-  {{ news_p }}</p>
-</div>
+
 <div class="container">
   <div class="row">
-    <div class="col-8">
-      <h2>Featured Image</h2>
-      <img src="{{img_url}}">
-    </div>
-    <div class="col-4">
-      <h2>Latest Mars Tweet</h2>
-      <p>{{ tweet_text }}</p>
-      <br>
-      <br>
-      <h2>Mars Facts</h2>
-      <table>mars_table</table>
+    <div class="col-md-12">
+      <h2>Latest Mars News</h2>
+      <p>{{ mars.news_title }}<br>
+      {{ mars.news_p }}</p>
     </div>
   </div>
   <div class="row">
-    <div class="col-12">
-      <ul>
-        {% for hemisphere in hemispheres %}
-        <li><img src="{{hemisphere.img_url}}"></li>
-        {% endfor %}
-      </ul>
+    <div class="col-md-8">
+      <h2>Featured Image</h2>
+      <img src="{{mars.img_url}}" class="img-responsive">
     </div>
+    <div class="col-md-4">
+      <h2>Latest Mars Tweet</h2>
+      <p>{{ mars.tweet_text }}</p>
+      <br>
+      <br>
+      <h2>Mars Facts</h2>
+      {{ mars.mars_table | safe }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="thumbnail">
+    {% for hemisphere in mars.hemispheres %}
+    <div class="col-md-6">
+      
+      <img src="{{hemisphere.img_url}}" class="img-responsive"> 
+      
+    </div>
+    {% endfor %}
   </div>
 </div>
 </body>
