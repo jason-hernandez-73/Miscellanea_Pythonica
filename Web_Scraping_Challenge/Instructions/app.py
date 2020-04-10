@@ -25,8 +25,7 @@ def scrape():
     data=mission_to_mars.scrape_info()
     # stores data into MongoDB
     collection.replace_one({}, data, upsert=True)
-    return "Success!"
-    # redirect("/")
+    return redirect("/")
     
 
 if __name__ == "__main__":
